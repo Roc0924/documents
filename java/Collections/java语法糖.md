@@ -1,4 +1,4 @@
-![ArrayList.png](images/java/Collections/ArrayList.png)
+![ArrayList.png](https://github.com/Roc0924/documents/blob/master/images/java/Collections/ArrayList.png)
 
 ```
 public class ArrayList<E> extends AbstractList<E>
