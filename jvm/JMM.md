@@ -77,6 +77,20 @@ JMM的有序性表现为：如果在本线程内观察，所有的操作都是�
 - 内存系统的重排序。由于处理器使用缓存和读写缓冲区，这使得加载和存储操作看上去可能是在乱序执行。
 
 
+#### 先行发生原则（happens-before）
+前面所述的内存交互操作必须要满足一定的规则，而happens-before就是定义这些规则的一个等效判断原则。happens-before是JMM定义的2个操作之间的偏序关系：如果操作A线性发生于操作B，则A产生的影响能被操作B观察到，“影响”包括修改了内存中共享变量的值、发送了消息、调用了方法等。如果两个操作满足happens-before原则，那么不需要进行同步操作，JVM能够保证操作具有顺序性，此时不能够随意的重排序。否则，无法保证顺序性，就能进行指令的重排序。
+
+happens-before原则主要包括：
+
+- 程序次序规则(Program Order Rule)：在同一个线程中，按照程序代码顺序，书写在前面的操作先行发生于书写在后面的操纵。准确的说是程序的控制流顺序，考虑分支和循环等。
+- 管理锁定规则(Monitor Lock Rule)：一个unlock操作先行发生于后面（时间上的顺序）对同一个锁的lock操作。
+- volatile变量规则(Volatile Variable Rule)：对一个volatile变量的写操作先行发生于后面（时间上的顺序）对该变量的读操作。
+- 线程启动规则(Thread Start Rule)：Thread对象的start()方法先行发生于此线程的每一个动作。
+- 线程终止规则(Thread Termination Rule)：线程的所有操作都先行发生于对此线程的终止检测，可以通过Thread.join()方法结束、Thread.isAlive()的返回值等手段检测到线程已经终止执行。
+- 线程中断规则(Thread Interruption Rule)：对线程interrupt()方法的调用先行发生于被中断线程的代码检测到中断时事件的发生。Thread.interrupted()可以检测是否有中断发生。
+- 对象终结规则(Finilizer Rule)：一个对象的初始化完成（构造函数执行结束）先行发生于它的finalize()的开始。
+- 传递性(Transitivity)：如果操作A 先行发生于操作B，操作B 先行发生于操作C，那么可以得出A 先行发生于操作C。
+
 
 
 
