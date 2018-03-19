@@ -9,3 +9,6 @@ Java内存模型中规定了所有的变量都存储在主内存中，每条线�
 
 ![JMM](https://github.com/Roc0924/documents/blob/master/images/jvm/JMM.png)
 
+
+
+- [ ] chaincode用户注册
